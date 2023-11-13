@@ -2,9 +2,18 @@ version: "2.1"
 
 services:
   web81:
-    image: devertix/phpenv-mssql-oracle:8.1
+    image: ghcr.io/devertix/phpenv-mssql-oracle:8.1
     ports:
       - "8081:80"
+    volumes:
+      - ".:/project/"
+    environment:
+      APACHE_RELATIVE_DOCROOT: public
+      XDEBUG_MODE: "develop,coverage,debug"
+  web82:
+    image: ghcr.io/devertix/phpenv-mssql-oracle:8.2
+    ports:
+      - "8082:80"
     volumes:
       - ".:/project/"
     environment:
