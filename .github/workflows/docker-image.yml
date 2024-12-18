@@ -1,0 +1,33 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  docker_publish_8_1:
+    runs-on: "ubuntu-20.04"
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build and publish a Docker image for ${{ github.repository }}
+      uses: macbre/push-to-ghcr@master
+      with:
+          image_name: ${{ github.repository }}
+          github_token: ${{ secrets.GH_TOKEN }}
+          dockerfile: "./8.1/Dockerfile"
+          context: "./8.1/"
+          image_tag: "8.1"
+  docker_publish_8_2:
+    runs-on: "ubuntu-20.04"
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build and publish a Docker image for ${{ github.repository }}
+      uses: macbre/push-to-ghcr@master
+      with:
+          image_name: ${{ github.repository }}
+          github_token: ${{ secrets.GH_TOKEN }}
+          dockerfile: "./8.2/Dockerfile"
+          context: "./8.2/"
+          image_tag: "8.2"
