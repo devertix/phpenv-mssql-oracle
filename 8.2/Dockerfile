@@ -4,7 +4,7 @@ RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - && cu
     apt-get update && \
     ACCEPT_EULA=Y DEBIAN_FRONTEND=noninteractive apt-get install -y --allow-unauthenticated msodbcsql17 unixodbc-dev php8.2-dev php-pear && \
     update-alternatives --set php /usr/bin/php8.2 && \
-    pecl install sqlsrv-5.11.1 && pecl install pdo_sqlsrv-5.11.1 && \
+    pecl install sqlsrv-5.12.0 && pecl install pdo_sqlsrv-5.12.0 && \
     echo "extension=sqlsrv.so" > /etc/php/8.2/mods-available/sqlsrv.ini && \
     echo "extension=pdo_sqlsrv.so" > /etc/php/8.2/mods-available/pdo_sqlsrv.ini && \
     phpenmod sqlsrv && phpenmod pdo_sqlsrv && chmod go+rw /tmp
