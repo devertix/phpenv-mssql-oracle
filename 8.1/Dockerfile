@@ -1,7 +1,13 @@
 FROM ghcr.io/devertix/phpenv:8.1
 
-RUN curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - && curl https://packages.microsoft.com/config/ubuntu/20.04/prod.list > /etc/apt/sources.list.d/mssql-release.list && \
-    apt-get update && \
+RUN curl -sSL https://packages.microsoft.com/keys/microsoft.asc \
+    | gpg --dearmor \
+    | tee /usr/share/keyrings/microsoft.gpg > /dev/null
+
+RUN echo "deb [arch=amd64 signed-by=/usr/share/keyrings/microsoft.gpg] https://packages.microsoft.com/ubuntu/24.04/prod noble main" \
+    > /etc/apt/sources.list.d/microsoft.list
+
+RUN apt-get update && \
     ACCEPT_EULA=Y DEBIAN_FRONTEND=noninteractive apt-get install -y --allow-unauthenticated msodbcsql18 unixodbc-dev php8.1-dev php-pear && \
     update-alternatives --set php /usr/bin/php8.1 && \
     pecl install sqlsrv-5.12.0 && pecl install pdo_sqlsrv-5.12.0 && \
