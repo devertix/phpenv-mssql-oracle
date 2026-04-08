@@ -1,4 +1,4 @@
-FROM ghcr.io/devertix/phpenv:8.2
+FROM ghcr.io/devertix/phpenv:8.3
 
 RUN curl -sSL https://packages.microsoft.com/keys/microsoft.asc \
     | gpg --dearmor \
@@ -8,9 +8,9 @@ RUN echo "deb [arch=amd64 signed-by=/usr/share/keyrings/microsoft.gpg] https://p
     > /etc/apt/sources.list.d/microsoft.list
 
 RUN apt-get update && \
-    ACCEPT_EULA=Y DEBIAN_FRONTEND=noninteractive apt-get install -y --allow-unauthenticated mssql-tools18 msodbcsql18 unixodbc-dev php8.2-dev php-pear && \
-    update-alternatives --set php /usr/bin/php8.2 && \
+    ACCEPT_EULA=Y DEBIAN_FRONTEND=noninteractive apt-get install -y --allow-unauthenticated mssql-tools18 msodbcsql18 unixodbc-dev php8.3-dev php-pear && \
+    update-alternatives --set php /usr/bin/php8.3 && \
     pecl install sqlsrv-5.12.0 && pecl install pdo_sqlsrv-5.12.0 && \
-    echo "extension=sqlsrv.so" > /etc/php/8.2/mods-available/sqlsrv.ini && \
-    echo "extension=pdo_sqlsrv.so" > /etc/php/8.2/mods-available/pdo_sqlsrv.ini && \
+    echo "extension=sqlsrv.so" > /etc/php/8.3/mods-available/sqlsrv.ini && \
+    echo "extension=pdo_sqlsrv.so" > /etc/php/8.3/mods-available/pdo_sqlsrv.ini && \
     phpenmod sqlsrv && phpenmod pdo_sqlsrv && chmod go+rw /tmp
